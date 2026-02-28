@@ -25,9 +25,50 @@ func (m Model) Update(msg tea.Msg) ( tea.Model,tea.Cmd) {
 //  if key pressed
 	case tea.KeyMsg : 
 		switch msg.String(){
+
 		case "ctrl+c","q" : // key to quit program
 			return m,tea.Quit
+
+		case "up","k" :
+			if m.Cursor > 0 {
+				m.Cursor--
+			}
+
+		case "down","j":
+			if m.Cursor < len(m.Tasks) -1 {
+				m.Cursor++
+			}
+
+		case "m", "M","enter" :
+			if len(m.Tasks) > 0 {
+				m.Tasks[m.Cursor].Completed = !m.Tasks[m.Cursor].Completed
+				storage.SaveTasks(m.Tasks)
+			}
+
+		
+		case "d","D" : 
+			if len(m.Tasks)>0{
+				m.Tasks = append(m.Tasks[:m.Cursor],m.Tasks[m.Cursor+1:]...)
+
+				if m.Cursor >= len(m.Tasks)&& m.Cursor > 0 {
+					m.Cursor--
+				}
+				storage.SaveTasks(m.Tasks)
+			}
+
+
+		case "c","C" : 
+			var incompleteTasks []storage.Task
+			for _,t := range m.Tasks{
+				if !t.Completed {
+					incompleteTasks = append(incompleteTasks, t)
+				}
+			}
+			m.Tasks = incompleteTasks
+			m.Cursor = 0
+			storage.SaveTasks(m.Tasks)
 		}
+		
 	}
 	return m,nil // return the updated model
 }
