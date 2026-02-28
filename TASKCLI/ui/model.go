@@ -34,8 +34,34 @@ func (m Model) Update(msg tea.Msg) ( tea.Model,tea.Cmd) {
 
 //View Build the actual Str to terminal
 func (m Model) View() string{
-	return fmt.Sprintf(
-		"GO-TASK!\n There are %d tasks.\nClick 'q' or 'Ctrl+C' to quit.\n",
-		len(m.Tasks),
-	)
+	s := HeaderStyle.Render("GoTaskCLI - Get Things Done") + "\n"
+	//Render Task List
+	if len(m.Tasks) == 0 {
+		s += "No Tasks yet, Wanna get some finised? Press 'N' to add \n"
+	}else{
+		for i,task := range m.Tasks{
+			cursor := " "
+			if m.Cursor == i { 
+				cursor = "> "
+			}
+			checked := " "
+			if task.Completed {
+				checked = "x"
+			}
+			taskStr := fmt.Sprintf("%s[%s]%s",cursor,checked,task.Title)
+
+			if task.Completed {
+				s += CompletedSyle.Render(taskStr) + "\n"
+			}else if m.Cursor == i{
+				s += SeletedStyle.Render(taskStr) + "\n"
+			} else{
+				s += NormalStyle.Render(taskStr) + "\n"
+			}
+		}
+	}
+
+	helpMsg := "↑/↓: Navigate • N: New • E: Edit • M: Mark/Unmark • D: Delete • C: Clear • Q: Quit"
+	s += HelpStyle.Render(helpMsg) + "\n"
+
+	return s
 }
