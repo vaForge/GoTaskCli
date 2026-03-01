@@ -43,7 +43,7 @@ Progress: ████████████░░░░░░░░░░░�
 
 ### Option 1 — Download Pre-built Binary (no Go required)
 
-Head to the [Releases](https://github.com/vaForge/taskcli/releases) page and grab the binary for your OS. No Go installation needed.
+Head to the [Releases](https://github.com/vaForge/GoTaskCli/releases) page and grab the binary for your OS. No Go installation needed.
 
 | OS      | Architecture             | File                        |
 | ------- | ------------------------ | --------------------------- |
@@ -91,7 +91,7 @@ taskcli
 Requires [Go 1.21+](https://go.dev/dl/) installed.
 
 ```bash
-go install github.com/vaForge/taskcli@latest
+go install github.com/vaForge/GoTaskCli@latest
 ```
 
 Then run:
@@ -106,7 +106,7 @@ taskcli
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/vaForge/taskcli.git
+git clone https://github.com/vaForge/GoTaskCli.git
 cd taskcli
 
 # 2. Install dependencies
