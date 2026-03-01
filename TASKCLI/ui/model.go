@@ -163,28 +163,35 @@ func (m Model) View() string{
 		return fmt.Sprintf(
 			"%s\n\n%s\n\n%s",
 			HeaderStyle.Render(headerMsg),
-			m.Input.View(),
+			InputBoxStyle.Render(m.Input.View()),
 			HelpStyle.Render("(esc to cancel • enter to save)"),
 		)
 	}
 
-	s := HeaderStyle.Render("GoTaskCLI - Get Things Done") + "\n\n"
+	s := HeaderStyle.Render("\t\tTASKCLI - Get Thins Done!")+ "\n"
 
-	allCompleted := len(m.Tasks) > 0 
-	for _,t := range(m.Tasks){
-		if !t.Completed {
-			allCompleted = false
+	total := len(m.Tasks)
+	completed := 0
+	for _, t := range m.Tasks{
+		if t.Completed {
+			completed ++
 		}
 	}
+
 	//Render Task List
-	if allCompleted{
+	if total > 0{	
+		percent := (completed * 100) / total
+		bar := renderProgressBar(percent,30)
+		s += StatusBarStyle.Render(fmt.Sprintf("\tProgress: %s  %d/%d (%d%%)",bar,completed,total,percent))+"\n\n"
+	}
+	if total > 0 && completed == total{
 		complimentStyle := lipgloss.NewStyle().
 								Foreground(lipgloss.Color("FFD700")).
 								Bold(true).MarginBottom(1)
-		s += complimentStyle.Render("GREAT WORK! All tasks are clear") + "\n"
+		s += complimentStyle.Render("\tGREAT WORK! All tasks are clear") + "\n"
 	}
 	if len(m.Tasks) == 0 {
-		s += "No Tasks yet, Wanna get some finised? Press 'N' to add \n"
+		s += "\tNo Tasks yet, Wanna get some finised? Press 'N' to add \n"
 	}else{
 		for i,task := range m.Tasks{
 			cursor := " "
@@ -195,7 +202,7 @@ func (m Model) View() string{
 			if task.Completed {
 				checked = "x"
 			}
-			taskStr := fmt.Sprintf("%s[%s]%s",cursor,checked,task.Title)
+			taskStr := fmt.Sprintf("\t%s[%s] %s",cursor,checked,task.Title)
 
 			if task.Completed {
 				s += CompletedSyle.Render(taskStr) + "\n"
@@ -207,8 +214,21 @@ func (m Model) View() string{
 		}
 	}
 
-	helpMsg := "↑/↓: Navigate • N: New • E: Edit • M: Mark/Unmark \n• D: Delete • C: Clear • Q: Quit"
+	helpMsg := "\t↑/↓: Navigate • N: New • E: Edit\nM: Mark/Unmark • D: Delete • C: Clear • Q: Quit"
 	s += HelpStyle.Render(helpMsg) + "\n"
 
 	return s
+}
+
+func renderProgressBar(percent,width int) string{
+	filled := (percent * width)/100
+	bar := ""
+	for i:=0; i < width;i++{
+		if i < filled {
+            bar += "█"
+        } else {
+            bar += "░"
+        }
+	}
+	return bar
 }
