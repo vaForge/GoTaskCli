@@ -1,0 +1,55 @@
+name: Release Binaries
+
+on:
+  push:
+    tags:
+      - "v*" # Triggers on any tag like v1.0.0, v1.2.3, etc.
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build & Release
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        include:
+          - goos: linux
+            goarch: amd64
+            asset_name: taskcli-linux-amd64
+          - goos: linux
+            goarch: arm64
+            asset_name: taskcli-linux-arm64
+          - goos: darwin
+            goarch: amd64
+            asset_name: taskcli-macos-amd64
+          - goos: darwin
+            goarch: arm64
+            asset_name: taskcli-macos-arm64
+          - goos: windows
+            goarch: amd64
+            asset_name: taskcli-windows-amd64.exe
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+
+      - name: Build binary
+        env:
+          GOOS: ${{ matrix.goos }}
+          GOARCH: ${{ matrix.goarch }}
+          CGO_ENABLED: 0
+        run: go build -ldflags="-s -w -X main.version=${{ github.ref_name }}" -o ${{ matrix.asset_name }} .
+
+      - name: Upload binary to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ matrix.asset_name }}
+          generate_release_notes: true
