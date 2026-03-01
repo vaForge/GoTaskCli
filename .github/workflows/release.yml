@@ -19,18 +19,23 @@ jobs:
           - goos: linux
             goarch: amd64
             asset_name: taskcli-linux-amd64
+            ext: ""
           - goos: linux
             goarch: arm64
             asset_name: taskcli-linux-arm64
+            ext: ""
           - goos: darwin
             goarch: amd64
             asset_name: taskcli-macos-amd64
+            ext: ""
           - goos: darwin
             goarch: arm64
             asset_name: taskcli-macos-arm64
+            ext: ""
           - goos: windows
             goarch: amd64
             asset_name: taskcli-windows-amd64.exe
+            ext: ".exe"
 
     steps:
       - name: Checkout code
@@ -46,7 +51,9 @@ jobs:
           GOOS: ${{ matrix.goos }}
           GOARCH: ${{ matrix.goarch }}
           CGO_ENABLED: 0
-        run: go build -ldflags="-s -w -X main.version=${{ github.ref_name }}" -o ${{ matrix.asset_name }} .
+        run: |
+          go build -ldflags="-s -w -X main.version=${{ github.ref_name }}" -o output${{ matrix.ext }} .
+          mv output${{ matrix.ext }} ${{ matrix.asset_name }}
 
       - name: Verify binary exists
         run: ls -lh ${{ matrix.asset_name }}
