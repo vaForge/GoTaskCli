@@ -16,10 +16,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	initialModel := ui.Model{
-		Tasks : tasks,
-		Cursor: 0,
-	}
+	initialModel := ui.NewModel(tasks)
+	
 
 	p := tea.NewProgram(initialModel)
 	if _,err := p.Run(); err!= nil {

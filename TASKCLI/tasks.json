@@ -1,17 +1,17 @@
 [
-  {
-    "id": 1,
-    "title": "Complete Go Task CLI",
-    "completed": true
-  },
-  {
-    "id": 2,
-    "title": "Practice segment trees in C++",
-    "completed": true
-  },
-  {
-    "id": 3,
-    "title": "Watch S2 Frieren: Beyond Journey's End",
-    "completed": true
-  }
-]
+   {
+     "id": 1,
+     "title": "Complete Go Task CLI",
+     "completed": false
+   },
+   {
+     "id": 3,
+     "title": "See S2 Frieren: Beyond Journey's End",
+     "completed": false
+   },
+   {
+     "id": 4,
+     "title": "Learn Dynamic Programming",
+     "completed": false
+   }
+ ]
