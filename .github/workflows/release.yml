@@ -48,8 +48,14 @@ jobs:
           CGO_ENABLED: 0
         run: go build -ldflags="-s -w -X main.version=${{ github.ref_name }}" -o ${{ matrix.asset_name }} .
 
+      - name: Verify binary exists
+        run: ls -lh ${{ matrix.asset_name }}
+
       - name: Upload binary to release
         uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: ${{ matrix.asset_name }}
           generate_release_notes: true
+        timeout-minutes: 5
