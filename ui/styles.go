@@ -46,4 +46,8 @@ var(
 					PaddingLeft(2).
                     MarginBottom(1)
 
+	ComplimentStyle = lipgloss.NewStyle().
+					Foreground(lipgloss.Color("FFD700")).
+					Bold(true).
+					MarginBottom(1)
 )

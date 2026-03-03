@@ -7,7 +7,6 @@ import (
 
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
 )
 
 //App state defines what view the user is currently looking at
@@ -186,10 +185,7 @@ func (m Model) View() string{
 		s += StatusBarStyle.Render(fmt.Sprintf("\tProgress: %s  %d/%d (%d%%)",bar,completed,total,percent))+"\n\n"
 	}
 	if total > 0 && completed == total{
-		complimentStyle := lipgloss.NewStyle().
-								Foreground(lipgloss.Color("FFD700")).
-								Bold(true).MarginBottom(1)
-		s += complimentStyle.Render("\tGREAT WORK! All tasks are clear") + "\n"
+		s += ComplimentStyle.Render("\tGREAT WORK! All tasks are clear") + "\n"
 	}
 	if len(m.Tasks) == 0 {
 		s += "\tNo Tasks yet, Wanna get some finised? Press 'N' to add \n"
