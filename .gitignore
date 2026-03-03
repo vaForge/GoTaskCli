@@ -1,0 +1,22 @@
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+taskcli
+taskcli-*
+output
+
+# Go build cache
+*.test
+*.out
+
+# Dependency vendor dir (if used)
+vendor/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
