@@ -297,9 +297,3 @@ This triggers [`.github/workflows/release.yml`](.github/workflows/release.yml) w
 - `windows/amd64`
 
 and uploads every binary to the GitHub Release automatically.
-
----
-
-## License
-
-MIT © vaForge
