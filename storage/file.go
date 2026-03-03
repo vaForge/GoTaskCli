@@ -15,7 +15,6 @@ func getFilePath() string{
 	}
 	return filepath.Join(home,".taskcli.json")
 }
-const fileName = "tasks.json"
 // This function reads JSON file and returns a slice 
 func LoadTasks() ([]Task , error){
 	path := getFilePath()

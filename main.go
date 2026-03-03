@@ -1,10 +1,11 @@
 package main
 
 import (
-	"TASKCLI/storage"
-	"TASKCLI/ui"
 	"fmt"
 	"os"
+
+	"github.com/vaForge/GoTaskCli/storage"
+	"github.com/vaForge/GoTaskCli/ui"
 
 	tea "github.com/charmbracelet/bubbletea"
 )

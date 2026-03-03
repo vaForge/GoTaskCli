@@ -1,4 +1,4 @@
-module TASKCLI
+module github.com/vaForge/GoTaskCli
 
 go 1.25.5
 

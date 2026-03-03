@@ -1,8 +1,9 @@
 package ui
 
 import (
-	"TASKCLI/storage"
 	"fmt"
+
+	"github.com/vaForge/GoTaskCli/storage"
 
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
